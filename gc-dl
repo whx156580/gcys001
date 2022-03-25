@@ -1,0 +1,45 @@
+from appium import webdriver
+#from selenium import webdriver
+#显示等待
+from selenium.webdriver.support.ui import WebDriverWait
+#模拟鼠标
+from selenium.webdriver.common.action_chains import ActionChains
+#模拟键盘
+from selenium.webdriver.common.keys import Keys
+import time
+des={}
+des['platformName']='Android'
+des['platformVersion']='7.1.2'
+des['noReset']='true'
+des['appActivity']='com.igancao.doctor.MainActivity'
+des['appPackage']='com.igancao.doctor'
+des['deviceName']='aosp'
+des['unicodeKeyboard']='true'
+des['resetKeyboard']='true'
+mdriver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', des)
+mdriver.implicitly_wait(10)
+time.sleep(5)
+#点击我的
+mdriver.find_elements_by_id('com.igancao.doctor:id/iv')[6].click()
+time.sleep(2)
+#点击切换密码登录
+mdriver.find_elements_by_class_name('android.widget.TextView')[3].click()
+time.sleep(3)
+#请输入手机号
+mdriver.find_element_by_id('com.igancao.doctor:id/etPhone').send_keys('18595809728')
+time.sleep(3)
+#请输入密码
+mdriver.find_element_by_id('com.igancao.doctor:id/etPassword').send_keys('wang156580')
+time.sleep(3)
+#同意协议
+# mdriver.find_element_by_id('com.igancao.doctor:id/cbAgreement').click()
+# mdriver.find_element_by_id('com.igancao.doctor:id/cbAgreement').click()
+time.sleep(3)
+#判断我同意按钮是否已选中
+ele1 = mdriver.find_element_by_id('com.igancao.doctor:id/cbAgreement').is_selected()
+response = print(ele1)
+if response is False:
+    mdriver.find_element_by_id('com.igancao.doctor:id/cbAgreement').click()
+else:
+    time.sleep(3)
+mdriver.find_element_by_id('com.igancao.doctor:id/btnLogin').click()#点击登录
